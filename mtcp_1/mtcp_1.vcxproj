@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.props" Condition="Exists('..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -123,8 +124,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="JordanForm.cpp" />
+    <ClCompile Include="project_base.cpp" />
+    <ClCompile Include="uSimilar.cpp" />
+    <ClCompile Include="源.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="JordanForm.h" />
+    <ClInclude Include="project_base.h" />
+    <ClInclude Include="uSimilar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.targets" Condition="Exists('..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.props'))" />
+    <Error Condition="!Exists('..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\vcpkg.C.src.vcpkg.1.0.0\build\native\vcpkg.C.src.vcpkg.targets'))" />
+  </Target>
 </Project>
