@@ -132,6 +132,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="JordanForm.h" />
     <ClInclude Include="project_base.h" />
     <ClInclude Include="uSimilar.h" />
   </ItemGroup>

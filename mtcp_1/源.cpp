@@ -1,4 +1,4 @@
-//#include "JordanForm.h"
+#include "JordanForm.h"
 #include "uSimilar.h"
 #include <string>
 
@@ -11,6 +11,7 @@ int main()
 	JordanForm js;
 	while (true)
 	{
+		std::cout << ">> ";
 		std::cin >> cmd;
 		if (cmd == "std")
 		{

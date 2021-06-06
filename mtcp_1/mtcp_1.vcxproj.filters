@@ -35,5 +35,8 @@
     <ClInclude Include="uSimilar.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="JordanForm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

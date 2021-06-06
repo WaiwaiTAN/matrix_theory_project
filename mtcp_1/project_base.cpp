@@ -6,6 +6,7 @@ void project_base::std_intput()
 	std::cout << "please type the dimension of your linear operator here: \n";
 	std::cin >> dim;
 	Eigen::MatrixXd mat_std(dim, dim);
+	std::cout << "please type your linear operator here: \n";
 	for (int i = 0; i < dim; i++)
 	{
 		for (int j = 0; j < dim; j++)

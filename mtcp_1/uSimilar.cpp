@@ -2,18 +2,15 @@
 
 void uSimilar::rand_input()
 {
-	project_base::rand_input();
-	std::cout << mat_in << std::endl;
-	std::cout << mat_in.transpose() << std::endl;
-	std::cout << mat_in.transpose() + mat_in << std::endl;
-	mat_in = mat_in.transpose() + mat_in;
+	Eigen::MatrixXd mat_ = Eigen::MatrixXd::Random(4, 4);
+	mat_in = mat_.transpose() + mat_;
 }
 
 void uSimilar::process()
 {
 	es.compute(mat_in);
-	mats_out[0] = es.eigenvalues().asDiagonal();
-	mats_out[1] = es.eigenvectors();
+	mats_out.push_back(es.eigenvalues().asDiagonal());
+	mats_out.push_back(es.eigenvectors());
 }
 
 void uSimilar::print_ans()
