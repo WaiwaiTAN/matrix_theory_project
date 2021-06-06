@@ -11,35 +11,35 @@ protected:
 		Eigen::EigenSolver<Eigen::MatrixXd> es(mat_in);
 		std::cout << "The eigenvalues of the input matrix are:" << std::endl << es.eigenvalues() << std::endl;
 		std::cout << "Size of eigenvalues: "<< std::endl << es.eigenvalues().size() << std::endl;
-		for(int itr = 0; itr < es.eigenvalues().size(); itr++){
+		for (int itr = 0; itr < es.eigenvalues().size(); itr++) {
 			std::vector<double> DimKer;
 			std::vector<double> d;
 			std::vector<double> j;
-			int eigenvalue = es.eigenvalues()[itr][0];
-			for(int i = 0; i < dim; i++){
-				for(int j = 0; j < dim; j++){
+			double eigenvalue = es.eigenvalues()(itr, 0);
+			for (int i = 0; i < dim; i++) {
+				for (int j = 0; j < dim; j++) {
 					if (i == j) { mat_lambda(i, j) = mat_in(i, j) - eigenvalue; }
 					else { mat_lambda(i, j) = mat_in(i, j); }
 				}
 			}
-			for(int k=1;k<=dim;k++){
-
-				mat_lambda_power = Eigen::pow<Eigen::MatrixXd>(mat_lambda,k);
+			mat_lambda_power = mat_lambda;
+			for (int k = 1; k <= dim; k++) {
 				Eigen::FullPivLU<Eigen::Matrix3f> lu_decomp(mat_lambda_power);
 				int dimker = dim - lu_decomp.rank();
 				DimKer[k] = dimker;
-				if (lu_decomp.rank() == 0){break;}
+				if (lu_decomp.rank() == 0) { break; }
+				mat_lambda_power = mat_lambda_power * mat_lambda;
 			}
-			for(int m=0;m< DimKer.size();m++){
-				if(m==0){d[m] = DimKer[m];}
-				else{
-					d[m] = DimKer[m] - DimKer[m-1];
+			for (int m = 0; m < DimKer.size(); m++) {
+				if (m == 0) { d[m] = DimKer[m]; }
+				else {
+					d[m] = DimKer[m] - DimKer[m - 1];
 				}
 			}
-			for(int n=0;n< DimKer.size();n++){
-				if(n==0){j[n] = d[DimKer.size()]; }
-				else{
-					j[n] = d[DimKer.size()] - d[DimKer.size()-1];
+			for (int n = 0; n < DimKer.size(); n++) {
+				if (n == 0) { j[n] = d[DimKer.size()]; }
+				else {
+					j[n] = d[DimKer.size()] - d[DimKer.size() - 1];
 				}
 			}
 		}

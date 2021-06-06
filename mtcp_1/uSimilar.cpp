@@ -3,7 +3,10 @@
 void uSimilar::rand_input()
 {
 	project_base::rand_input();
-	mat_in = mat_in.adjoint() * mat_in;
+	std::cout << mat_in << std::endl;
+	std::cout << mat_in.transpose() << std::endl;
+	std::cout << mat_in.transpose() + mat_in << std::endl;
+	mat_in = mat_in.transpose() + mat_in;
 }
 
 void uSimilar::process()

@@ -18,7 +18,7 @@ void project_base::std_intput()
 
 void project_base::rand_input()
 {
-	mat_in = Eigen::MatrixXd::Random();
+	mat_in = Eigen::MatrixXd::Random(4, 4);
 }
 
 void project_base::rand_demo()

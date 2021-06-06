@@ -124,7 +124,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="JordanForm.cpp" />
     <ClCompile Include="project_base.cpp" />
     <ClCompile Include="uSimilar.cpp" />
     <ClCompile Include="源.cpp" />
@@ -133,7 +132,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="JordanForm.h" />
     <ClInclude Include="project_base.h" />
     <ClInclude Include="uSimilar.h" />
   </ItemGroup>

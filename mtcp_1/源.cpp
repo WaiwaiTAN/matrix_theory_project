@@ -1,8 +1,8 @@
-#include "JordanForm.h"
+//#include "JordanForm.h"
 #include "uSimilar.h"
 #include <string>
 
-#define test_1
+//#define test_1
 int main()
 {
 	std::string cmd;
@@ -33,6 +33,7 @@ int main()
 	uSimilar us;
 	while (true)
 	{
+		std::cout << ">> ";
 		std::cin >> cmd;
 		if (cmd == "std")
 		{
