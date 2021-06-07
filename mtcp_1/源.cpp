@@ -2,26 +2,24 @@
 #include "uSimilar.h"
 #include <string>
 
-//#define test_1
-int main()
+
+void presse_demo(project_base & proj)
 {
 	std::string cmd;
 	std::cout << "intput command to run a demo.\ncommand 'std' means input in std stream.\ncommand 'rand' means run a random demo\ncommand 'quit' means quit\n";
-#ifdef test_1
-	JordanForm js;
 	while (true)
 	{
 		std::cout << ">> ";
 		std::cin >> cmd;
 		if (cmd == "std")
 		{
-			js.std_demo();
+			proj.std_demo();
 			continue;
 		}
 
 		if (cmd == "rand")
 		{
-			js.rand_demo();
+			proj.rand_demo();
 			continue;
 		}
 
@@ -30,30 +28,23 @@ int main()
 			break;
 		}
 	}
-#else
-	uSimilar us;
-	while (true)
+}
+
+int main()
+{
+	std::cout << "chooose problem number(1 or 2):\n";
+	int cmd;
+	std::cin >> cmd;
+	if (cmd == 1)
 	{
-		std::cout << ">> ";
-		std::cin >> cmd;
-		if (cmd == "std")
-		{
-			us.std_demo();
-			continue;
-		}
-
-		if (cmd == "rand")
-		{
-			us.rand_demo();
-			continue;
-		}
-
-		if (cmd == "quit")
-		{
-			break;
-		}
+		JordanForm js;
+		presse_demo(js);
 	}
-#endif // test_1
+	else
+	{
+		uSimilar us;
+		presse_demo(us);
+	}
 
 	return 0;
 }
