@@ -15,6 +15,7 @@ void uSimilar::process()
 
 void uSimilar::print_ans()
 {
-	std::cout << "eigenbasis matrix: \n" << mats_out[1] << std::endl;
-	std::cout << "diagonal matrix: \n" << mats_out[0] << std::endl;
+	std::cout << "eigenbasis matrix V: \n" << mats_out[1] << std::endl;
+	std::cout << "V*V^dagger: \n" << mats_out[1] * mats_out[1].transpose() << std::endl;
+	std::cout << "diagonal matrix D: \n" << mats_out[0] << std::endl;
 }
