@@ -3,18 +3,15 @@
 #include <iostream>
 #include <fstream>
 #include <Eigen/Dense>
+#include <Eigen/IterativeLinearSolvers>
 
-
-using namespace std;
-
-using namespace Eigen;
 
 /*!
  * \brief loadData This function loads scatter data from file stream fs
  * \param fs File stream which data is loaded from, supposed to be Read-Only
  * \return A n by 2 matrix in which x-y data in a scatter chart is stored.
  */
-Eigen::MatrixXd loadData(std::fstream &fs);
+Eigen::MatrixXd loadData(std::ifstream &fs);
 /*!
  * \brief polyFit This function performs a polynomial fit.
  * \param mat The scatter data matrix which is supposed to be a n by 2 matrix.

@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     std::cout << "This is a demo of problem 3 of MTCP\n";
     std::string filename;
-    std::fstream fs;
+    std::ifstream fs;
     Eigen::MatrixXd scatter_mat, line_mat, coefs_mat;
     double x_span[2];
     int estimate_size;
@@ -18,7 +18,13 @@ int main(int argc, char *argv[])
         if (filename == ".quit")
             break;
         fs.open(filename);
+        if (!fs)
+        {
+            std::cout << "fail to open file: " << filename << std::endl;
+            continue;
+        }
         scatter_mat = loadData(fs);
+        fs.close();
 
         std::cout << "Please type the fitting type here: (linear or parabolic):\n";
         std::cin >> filename;

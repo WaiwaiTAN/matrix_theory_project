@@ -8,7 +8,7 @@ int drawData(int argc, char *argv[], Eigen::MatrixXd scatter_mat, Eigen::MatrixX
     QLineSeries *line_series = new QLineSeries();
     auto scatter_series = new QScatterSeries();
     scatter_series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-    scatter_series->setMarkerSize(15.0);
+    scatter_series->setMarkerSize(6.0);
 //![1]
 
 //![2]
@@ -27,8 +27,8 @@ int drawData(int argc, char *argv[], Eigen::MatrixXd scatter_mat, Eigen::MatrixX
 //![3]
     QChart *chart = new QChart();
     chart->legend()->hide();
-    chart->addSeries(line_series);
     chart->addSeries(scatter_series);
+    chart->addSeries(line_series);
     chart->createDefaultAxes();
     chart->setTitle("Fitting Result");
 //![3]
@@ -42,7 +42,7 @@ int drawData(int argc, char *argv[], Eigen::MatrixXd scatter_mat, Eigen::MatrixX
 //![5]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+    window.resize(800, 600);
     window.show();
 //![5]
 

@@ -6,8 +6,9 @@ SOURCES += \
     drawData.cpp \
     main.cpp \
     polyFit.cpp
+
+# Modify the next line to include your own Eigen library.
 INCLUDEPATH += C:\src\vcpkg\installed\x86-windows\include\eigen3
-target.path = $$[QT_INSTALL_EXAMPLES]/charts/linechart
 INSTALLS += target
 
 HEADERS += \
