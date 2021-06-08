@@ -32,8 +32,10 @@ int main(int argc, char *argv[])
 
         std::cout << "Type in the number of steps:\n";
         std::cin >> estimate_size;
-        line_mat = Estimate(coefs_mat, x_span[0], x_span[1], estimate_size);
-
+        if (filename == "linear")
+            line_mat = Estimate(coefs_mat, x_span[0], x_span[1], estimate_size, true);
+        else if (filename == "parabolic")
+            line_mat = Estimate(coefs_mat, x_span[0], x_span[1], estimate_size, false);
         drawData(argc, argv, scatter_mat, line_mat);
     }
     return 0;
