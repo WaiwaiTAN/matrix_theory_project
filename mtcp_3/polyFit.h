@@ -1,8 +1,13 @@
 #ifndef POLYFIT_H
 #define POLYFIT_H
-
+#include <iostream>
 #include <fstream>
 #include <Eigen/Dense>
+
+
+using namespace std;
+
+using namespace Eigen;
 
 /*!
  * \brief loadData This function loads scatter data from file stream fs
@@ -10,7 +15,6 @@
  * \return A n by 2 matrix in which x-y data in a scatter chart is stored.
  */
 Eigen::MatrixXd loadData(std::fstream &fs);
-
 /*!
  * \brief polyFit This function performs a polynomial fit.
  * \param mat The scatter data matrix which is supposed to be a n by 2 matrix.
@@ -30,5 +34,5 @@ Eigen::MatrixXd polyFit(const Eigen::MatrixXd &mat, bool linear);
  * \param m The number of steps.
  * \return The results which is supposed to be an m by 2 matrix.
  */
-Eigen::MatrixXd Estimate(const Eigen::MatrixXd &mat, double x_start, double x_finish, int m);
+Eigen::MatrixXd Estimate(const Eigen::MatrixXd &mat, double x_start, double x_finish, int m,bool linear);
 #endif // POLYFIT_H
