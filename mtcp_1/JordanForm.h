@@ -10,7 +10,6 @@ protected:
 	virtual void process() {
         int dim = mat_in.rows();
         bool con_pow = 1;
-        bool con_cal = 1;
         std::vector<std::string>::iterator iter;
         Eigen::MatrixXd mat_lambda(dim, dim);
         Eigen::MatrixXd mat_lambda_power(dim, dim);
@@ -19,27 +18,33 @@ protected:
         mat_lambda_power = Eigen::MatrixXd::Identity(dim, dim);
         mat_id = Eigen::MatrixXd::Identity(dim, dim);
         std::cout << "The eigenvalues of the input matrix are:" << std::endl << es.eigenvalues() << std::endl;
-//        std::cout << "Size of eigenvalues: " << std::endl << es.eigenvalues().size() << std::endl;
+        std::cout << "Size of eigenvalues: " << std::endl << es.eigenvalues().size() << std::endl;
 //        std::cout << "The first eigenvalue is: " << std::endl << es.eigenvalues()[0].real() << std::endl;
         std::cout << "Dim: " << dim << std::endl;
-
         eigenvalue.push_back(es.eigenvalues()[0].real());
-        for (int eig = 0; eig < es.eigenvalues().size(); eig++){
-            for(int nn = 0; nn < eigenvalue.size(); nn++)
-            {
-                if (es.eigenvalues()[eig].real() == eigenvalue[nn]){
-                    con_cal = 0;
-                }
+        for (int eig = 1; eig < es.eigenvalues().size(); eig++){
+//            for(int nn = 0; nn < eigenvalue.size(); nn++)
+//            {
+//                if (es.eigenvalues()[eig].real() != eigenvalue[nn]){con_cal = 1; }
+//            }
+            if(abs(es.eigenvalues()[eig].real() - eigenvalue[eigenvalue.size() - 1]) > 0.01){
+                eigenvalue.push_back(es.eigenvalues()[eig].real());
             }
-            if (!con_cal){break; }
-            else{eigenvalue.push_back(es.eigenvalues()[eig].real()); }
+            else{}
         }
+
+        std::cout<<"The eigenvalues are: ";
+        for (int eig_itr = 0; eig_itr < eigenvalue.size(); eig_itr++){
+            std::cout<<eigenvalue[eig_itr];
+        }
+        std::cout<<std::endl;
+        std::cout<<"Length of eigenvalue:"<<eigenvalue.size()<<std::endl;
 
         for (int itr = 0; itr < eigenvalue.size(); itr++) {
             std::vector<float> DimKer;
             std::vector<float> d;
             std::vector<float> j;
-            double eigenvalue_real = es.eigenvalues()[itr].real();
+            double eigenvalue_real = eigenvalue[itr];
             std::cout<<eigenvalue_real<<std::endl;
             mat_lambda = mat_in - eigenvalue_real * mat_id;
             for (int power_row = 0; power_row < mat_lambda_power.rows(); power_row ++){
@@ -50,6 +55,7 @@ protected:
                 }
             }
             std::cout<<"MatLambda: "<<std::endl<<mat_lambda<<std::endl;
+			int last_dimker = 0;
 
             while(con_pow){
                 mat_lambda_power = mat_lambda_power * mat_lambda;
@@ -63,9 +69,18 @@ protected:
                 std::cout<<"---------------------"<<std::endl<<mat_lambda_power<<std::endl;
                 Eigen::FullPivLU<Eigen::MatrixXd> lu_decomp(mat_lambda_power);
                 int dimker = dim - lu_decomp.rank();
-                DimKer.push_back(dimker);
-                if(dimker == dim){
-                    con_pow = 0;
+                if(DimKer.size() == 0){
+                    DimKer.push_back(dimker);
+                    last_dimker = dimker;
+                }
+                else{
+                    if(last_dimker != dimker){
+                        DimKer.push_back(dimker);
+                        last_dimker = dimker;
+                    }
+                    else{
+                        con_pow = 0;
+                    }
                 }
             }
 
@@ -96,38 +111,43 @@ protected:
                 std::cout<<j[num]<<"  ";
             }
             std::cout<<"]"<<std::endl;
-
-
+            con_pow = 1;
+            mat_lambda_power = Eigen::MatrixXd::Identity(dim, dim);
         }
+        std::cout<<"D:"<<D.size()<<std::endl;
+        std::cout<<"J:"<<J.size()<<std::endl;
+
     }
 
 		
 	virtual void print_ans() {
         int dim = mat_in.rows();
         Eigen::MatrixXd mat_Jordan = Eigen::MatrixXd::Zero(dim,dim);
+        int start_row = 0, start_col = 0;
         for (int itr = 0; itr < eigenvalue.size(); itr++){
+            std::cout<<"Eigenvalue: "<<eigenvalue[itr]<<std::endl;
+            std::cout<<"Start_row: "<<start_row<<std::endl;
             int sub_dim = 0;
-            int start_row = 0, start_col = 0;
             for (int num = 0; num < D[itr].size(); num ++){
                 sub_dim += D[itr][num];
             }
             Eigen::MatrixXd mat_subJor(sub_dim,sub_dim);
-            for (int itr_j = 0; itr_j < J[itr].size(); itr_j++){
-                int len_row = J[itr].size() - itr_j, len_col = J[itr].size() - itr_j;
-                int num_j = J[itr][itr_j];
-                if(num_j > 0){
-                    for (int sub_itr = 0; sub_itr < num_j; sub_itr++){
-                        for (int row = start_row; row < start_row+len_row*num_j; row++) {
-                            for (int col = start_col; col < start_col+len_col*num_j; col++) {
-                                if(row == col){mat_Jordan(row,col) = eigenvalue[itr]; }
-                                else if(col - row == 1){mat_Jordan(row,col) = 1; }
+            for (int sub_j = 0; sub_j < J[itr].size(); sub_j++){
+                for (int num_sub_j = 0; num_sub_j < J[itr][sub_j]; num_sub_j++){
+                    int end_row = start_row + J[itr].size() - sub_j;
+                    for (int sub_row = start_row; sub_row < end_row; sub_row++){
+                        for (int sub_col = start_col; sub_col < end_row; sub_col++){
+                            if(sub_row==sub_col){
+                                mat_Jordan(sub_row,sub_col) = eigenvalue[itr];
+                            }
+                            else if(sub_col == sub_row+1){
+                                mat_Jordan(sub_row,sub_col) = 1;
                             }
                         }
-                        start_row = start_row+len_row*num_j;
-                        start_col = start_col+len_col*num_j;
-                    }
+                    } start_row = end_row;
                 }
             }
+
         }
         std::cout<<"The Jordan Matrix should be: "<<std::endl << mat_Jordan << std::endl;
 	}
