@@ -35,7 +35,7 @@ protected:
 
         std::cout<<"The eigenvalues are: ";
         for (int eig_itr = 0; eig_itr < eigenvalue.size(); eig_itr++){
-            std::cout<<eigenvalue[eig_itr];
+            std::cout<<eigenvalue[eig_itr] << "\t";
         }
         std::cout<<std::endl;
         std::cout<<"Length of eigenvalue:"<<eigenvalue.size()<<std::endl;
@@ -54,7 +54,9 @@ protected:
                     }
                 }
             }
+#ifdef print_info
             std::cout<<"MatLambda: "<<std::endl<<mat_lambda<<std::endl;
+#endif // print_info
 			int last_dimker = 0;
 
             while(con_pow){
@@ -66,7 +68,10 @@ protected:
                         }
                     }
                 }
-                std::cout<<"---------------------"<<std::endl<<mat_lambda_power<<std::endl;
+
+#ifdef print_info
+				std::cout << "---------------------" << std::endl << mat_lambda_power << std::endl;
+#endif // print_info
                 Eigen::FullPivLU<Eigen::MatrixXd> lu_decomp(mat_lambda_power);
                 int dimker = dim - lu_decomp.rank();
                 if(DimKer.size() == 0){
