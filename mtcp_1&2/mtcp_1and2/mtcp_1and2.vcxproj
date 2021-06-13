@@ -24,6 +24,7 @@
     <ProjectGuid>{291A33AF-CF21-4540-969A-402268FD89C2}</ProjectGuid>
     <RootNamespace>mtcp1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>mtcp_1and2</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -126,7 +127,7 @@
   <ItemGroup>
     <ClCompile Include="project_base.cpp" />
     <ClCompile Include="uSimilar.cpp" />
-    <ClCompile Include="源.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
