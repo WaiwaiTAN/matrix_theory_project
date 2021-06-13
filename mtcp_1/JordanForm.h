@@ -23,10 +23,6 @@ protected:
         std::cout << "Dim: " << dim << std::endl;
         eigenvalue.push_back(es.eigenvalues()[0].real());
         for (int eig = 1; eig < es.eigenvalues().size(); eig++){
-//            for(int nn = 0; nn < eigenvalue.size(); nn++)
-//            {
-//                if (es.eigenvalues()[eig].real() != eigenvalue[nn]){con_cal = 1; }
-//            }
             if(abs(es.eigenvalues()[eig].real() - eigenvalue[eigenvalue.size() - 1]) > 0.01){
                 eigenvalue.push_back(es.eigenvalues()[eig].real());
             }
@@ -128,7 +124,7 @@ protected:
 	virtual void print_ans() {
         int dim = mat_in.rows();
         Eigen::MatrixXd mat_Jordan = Eigen::MatrixXd::Zero(dim,dim);
-        int start_row = 0, start_col = 0;
+        int start_row = 0;
         for (int itr = 0; itr < eigenvalue.size(); itr++){
             std::cout<<"Eigenvalue: "<<eigenvalue[itr]<<std::endl;
             std::cout<<"Start_row: "<<start_row<<std::endl;
@@ -141,7 +137,7 @@ protected:
                 for (int num_sub_j = 0; num_sub_j < J[itr][sub_j]; num_sub_j++){
                     int end_row = start_row + J[itr].size() - sub_j;
                     for (int sub_row = start_row; sub_row < end_row; sub_row++){
-                        for (int sub_col = start_col; sub_col < end_row; sub_col++){
+                        for (int sub_col = start_row; sub_col < end_row; sub_col++){
                             if(sub_row==sub_col){
                                 mat_Jordan(sub_row,sub_col) = eigenvalue[itr];
                             }
@@ -152,7 +148,6 @@ protected:
                     } start_row = end_row;
                 }
             }
-
         }
         std::cout<<"The Jordan Matrix should be: "<<std::endl << mat_Jordan << std::endl;
 	}
