@@ -17,3 +17,4 @@ This part is under the folder "slides".
 ## Dependency and installation
 If you want to run our codes, please install Engen3.3.9 or later first.
 For problem 3, you should install Qt Creator 4.14.2 with Qt 5.15.2 or later and tick option "run in terminal".
+![](doc/img/run_in_terminal.png)
